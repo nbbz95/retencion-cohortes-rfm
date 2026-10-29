@@ -1,0 +1,395 @@
+{
+ "limpieza": {
+  "filas_originales": 541909,
+  "cancelaciones": 9288,
+  "sin_cliente": 134697,
+  "cantidad_o_precio_invalido": 40,
+  "filas_finales": 397884
+ },
+ "kpis": {
+  "clientes": 4338,
+  "ingresos": 8911407.904,
+  "recompra": 0.6558321807284463,
+  "retencion_m1": 0.19941728714794432,
+  "retencion_m3": 0.22738486842105263,
+  "retencion_dic10_m11": 0.5028248587570622,
+  "share_uk": 0.8201163758556641
+ },
+ "cohortes": {
+  "filas": [
+   "2010-12",
+   "2011-01",
+   "2011-02",
+   "2011-03",
+   "2011-04",
+   "2011-05",
+   "2011-06",
+   "2011-07",
+   "2011-08",
+   "2011-09",
+   "2011-10",
+   "2011-11"
+  ],
+  "tamanos": [
+   885,
+   417,
+   380,
+   452,
+   300,
+   284,
+   242,
+   188,
+   169,
+   299,
+   358,
+   323
+  ],
+  "columnas": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "valores": [
+   [
+    1.0,
+    0.3661,
+    0.3232,
+    0.3842,
+    0.3627,
+    0.3977,
+    0.3627,
+    0.3492,
+    0.3537,
+    0.3955,
+    0.374,
+    0.5028
+   ],
+   [
+    1.0,
+    0.2206,
+    0.2662,
+    0.2302,
+    0.3213,
+    0.2878,
+    0.247,
+    0.2422,
+    0.2998,
+    0.3261,
+    0.3645,
+    null
+   ],
+   [
+    1.0,
+    0.1868,
+    0.1868,
+    0.2842,
+    0.2711,
+    0.2474,
+    0.2526,
+    0.2789,
+    0.2474,
+    0.3053,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.1504,
+    0.2522,
+    0.1991,
+    0.2235,
+    0.1681,
+    0.2677,
+    0.2301,
+    0.2788,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.2133,
+    0.2033,
+    0.21,
+    0.1967,
+    0.2267,
+    0.2167,
+    0.26,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.1901,
+    0.1725,
+    0.1725,
+    0.2077,
+    0.2324,
+    0.2641,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.1736,
+    0.157,
+    0.2645,
+    0.2314,
+    0.3347,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.1809,
+    0.2074,
+    0.2234,
+    0.2713,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.2071,
+    0.2485,
+    0.2426,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.2341,
+    0.301,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    0.2402,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    1.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  ],
+  "curva": [
+   1.0,
+   0.19941728714794432,
+   0.22519223727572318,
+   0.22738486842105263,
+   0.2487847989394609,
+   0.2433734939759036,
+   0.2509547190398254,
+   0.25112976113621693,
+   0.27622097678142515
+  ]
+ },
+ "segmentos": [
+  {
+   "segmento": "Campeones",
+   "clientes": 633,
+   "recencia": 4.0,
+   "frecuencia": 8.0,
+   "monto": 4341073.16,
+   "ticket_cliente": 2612.96,
+   "share_clientes": 0.1459197786998617,
+   "share_ingresos": 0.4871366238382438
+  },
+  {
+   "segmento": "Leales",
+   "clientes": 812,
+   "recencia": 29.0,
+   "frecuencia": 5.0,
+   "monto": 2335144.091,
+   "ticket_cliente": 1740.54,
+   "share_clientes": 0.1871830336560627,
+   "share_ingresos": 0.2620398612829563
+  },
+  {
+   "segmento": "En riesgo",
+   "clientes": 598,
+   "recencia": 136.0,
+   "frecuencia": 3.0,
+   "monto": 648979.601,
+   "ticket_cliente": 679.255,
+   "share_clientes": 0.13785154449054865,
+   "share_ingresos": 0.07282570924721078
+  },
+  {
+   "segmento": "Hibernando",
+   "clientes": 1072,
+   "recencia": 218.0,
+   "frecuencia": 1.0,
+   "monto": 524294.952,
+   "ticket_cliente": 296.33500000000004,
+   "share_clientes": 0.2471184877823882,
+   "share_ingresos": 0.058834132344527015
+  },
+  {
+   "segmento": "Potenciales leales",
+   "clientes": 481,
+   "recencia": 17.0,
+   "frecuencia": 2.0,
+   "monto": 502445.86,
+   "ticket_cliente": 519.44,
+   "share_clientes": 0.11088059013370216,
+   "share_ingresos": 0.05638232088719345
+  },
+  {
+   "segmento": "No podemos perderlos",
+   "clientes": 65,
+   "recencia": 105.0,
+   "frecuencia": 7.0,
+   "monto": 180982.5,
+   "ticket_cliente": 2225.9700000000003,
+   "share_clientes": 0.014983863531581374,
+   "share_ingresos": 0.020309080444938864
+  },
+  {
+   "segmento": "Necesitan atención",
+   "clientes": 188,
+   "recencia": 51.0,
+   "frecuencia": 2.0,
+   "monto": 168122.17,
+   "ticket_cliente": 638.0550000000001,
+   "share_clientes": 0.04333794375288151,
+   "share_ingresos": 0.01886594933271276
+  },
+  {
+   "segmento": "Por dormirse",
+   "clientes": 353,
+   "recencia": 52.0,
+   "frecuencia": 1.0,
+   "monto": 166423.88,
+   "ticket_cliente": 331.95,
+   "share_clientes": 0.08137390502535731,
+   "share_ingresos": 0.018675374507915694
+  },
+  {
+   "segmento": "Prometedores",
+   "clientes": 94,
+   "recencia": 22.0,
+   "frecuencia": 1.0,
+   "monto": 27636.75,
+   "ticket_cliente": 221.425,
+   "share_clientes": 0.021668971876440755,
+   "share_ingresos": 0.003101277631741545
+  },
+  {
+   "segmento": "Nuevos",
+   "clientes": 42,
+   "recencia": 7.0,
+   "frecuencia": 1.0,
+   "monto": 16304.94,
+   "ticket_cliente": 274.505,
+   "share_clientes": 0.009681881051175657,
+   "share_ingresos": 0.0018296704825599241
+  }
+ ],
+ "mensual": [
+  {
+   "mes": "2010-12",
+   "ingresos": 572713.89
+  },
+  {
+   "mes": "2011-01",
+   "ingresos": 569445.04
+  },
+  {
+   "mes": "2011-02",
+   "ingresos": 447137.35
+  },
+  {
+   "mes": "2011-03",
+   "ingresos": 595500.7600000001
+  },
+  {
+   "mes": "2011-04",
+   "ingresos": 469200.361
+  },
+  {
+   "mes": "2011-05",
+   "ingresos": 678594.56
+  },
+  {
+   "mes": "2011-06",
+   "ingresos": 661213.69
+  },
+  {
+   "mes": "2011-07",
+   "ingresos": 600091.0109999999
+  },
+  {
+   "mes": "2011-08",
+   "ingresos": 645343.8999999999
+  },
+  {
+   "mes": "2011-09",
+   "ingresos": 952838.382
+  },
+  {
+   "mes": "2011-10",
+   "ingresos": 1039318.7900000002
+  },
+  {
+   "mes": "2011-11",
+   "ingresos": 1161817.38
+  }
+ ]
+}
