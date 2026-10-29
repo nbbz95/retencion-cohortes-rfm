@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retención y segmentación RFM</title>
+<meta name="description" content="Cohortes de retención, segmentación RFM y un memo con acciones sobre 4.300 clientes de un retailer online del Reino Unido.">
+<link rel="stylesheet" href="assets/ui.css">
+<style>
+  .memo h2 { font-size: 18px; margin-bottom: 4px; }
+  .memo ol { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 10px; }
+  .memo li { padding-left: 4px; }
+  .memo li b { color: var(--ink); }
+  .memo li span { color: var(--ink-2); }
+  table.heat td { font-size: 12px; min-width: 46px; text-align: center; padding: 6px 4px; border-bottom: 2px solid var(--surface); }
+  table.heat th { text-align: center; }
+  table.heat td:first-child { text-align: left; color: var(--ink-2); padding-right: 10px; white-space: nowrap; }
+  .seg-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 8px; }
+  .split { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; margin: 6px 0 2px; }
+  .split div { height: 100%; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Análisis de clientes · Cohortes y RFM</div>
+      <h1>¿Quiénes vuelven a comprar y en quién conviene invertir?</h1>
+      <p>Un año de ventas de un mayorista online de regalos del Reino Unido (dic 2010 a dic 2011): retención por cohortes, segmentación RFM y un plan de acción.</p>
+    </div>
+    <button class="btn" id="theme" type="button">Auto</button>
+  </header>
+
+  <section class="grid" id="kpis"></section>
+
+  <section class="card memo reveal" style="margin-top:16px">
+    <div class="eyebrow" style="margin-bottom:4px">Memo para el equipo comercial</div>
+    <h2>Proteger a los mejores, recuperar a los que se van y empujar la segunda compra</h2>
+    <p class="sub" id="memo-sub"></p>
+    <ol id="memo"></ol>
+  </section>
+
+  <section class="grid" style="margin-top:16px">
+    <div class="card span-12 reveal">
+      <h2>Retención por cohorte</h2>
+      <p class="sub">Porcentaje de los clientes de cada cohorte (mes de su primera compra) que vuelve a comprar N meses después.</p>
+      <div id="heat"></div>
+      <p class="note" style="margin:12px 0 0">La cohorte de diciembre 2010 retiene mucho más porque incluye clientes que ya compraban antes de que empiecen los datos. Por eso queda fuera del promedio.</p>
+    </div>
+
+    <div class="card span-6 reveal">
+      <h2>Curva de retención promedio</h2>
+      <p class="sub">Ponderada por tamaño de cohorte, sin diciembre 2010.</p>
+      <div id="curve"></div>
+    </div>
+    <div class="card span-6 reveal">
+      <h2>Ingresos por segmento</h2>
+      <p class="sub">Participación en los ingresos del año.</p>
+      <div id="segbars"></div>
+    </div>
+
+    <div class="card span-12 reveal">
+      <h2>Segmentos RFM</h2>
+      <p class="sub">Recencia, frecuencia y monto puntuados de 1 a 5 por quintiles; el segmento sale de recencia y frecuencia.</p>
+      <div id="segtable"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Datos: <a href="https://archive.ics.uci.edu/dataset/352/online+retail">Online Retail, UCI Machine Learning Repository</a> (Chen, 2015).
+    Se descartaron cancelaciones, filas sin cliente y cantidades o precios inválidos. Código y tests en
+    <a href="https://github.com/nbbz95/retencion-cohortes-rfm">GitHub</a>.
+  </footer>
+</div>
+
+<script src="assets/charts.js"></script>
+<script>
+const pct = (v, d = 0) => (v * 100).toLocaleString("es-AR", { maximumFractionDigits: d, minimumFractionDigits: d }) + "%";
+const gbp = (v) => "£ " + Math.round(v).toLocaleString("es-AR");
+const gbpM = (v) => "£ " + (v / 1e6).toLocaleString("es-AR", { maximumFractionDigits: 1 }) + " M";
+const num = (v) => Math.round(v).toLocaleString("es-AR");
+const MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const mes = (s) => MES[+s.slice(5) - 1] + " " + s.slice(2, 4);
+const SEG_SLOT = { "Campeones": 0, "Leales": 2, "Potenciales leales": 6, "En riesgo": 1, "No podemos perderlos": 7, "Hibernando": 3 };
+
+fetch("data.json").then((r) => r.json()).then((d) => {
+  const k = d.kpis;
+  const seg = Object.fromEntries(d.segmentos.map((s) => [s.segmento, s]));
+  document.getElementById("kpis").innerHTML = [
+    ["Clientes identificados", num(k.clientes), `${pct(k.share_uk)} de los ingresos es del Reino Unido`],
+    ["Ingresos del período", gbpM(k.ingresos), "ventas netas de cancelaciones"],
+    ["Compraron más de una vez", pct(k.recompra), "en el año"],
+    ["Vuelven al mes siguiente", pct(k.retencion_m1), `${pct(k.retencion_m3)} a los 3 meses`],
+  ].map(([l, v, s]) => `<div class="card kpi span-3 reveal"><div class="label">${l}</div><div class="value">${v}</div><div class="delta">${s}</div></div>`).join("");
+
+  const c = seg["Campeones"], l = seg["Leales"], r = seg["En riesgo"], n = seg["No podemos perderlos"], h = seg["Hibernando"];
+  document.getElementById("memo-sub").textContent = `${num(k.clientes)} clientes, ${gbpM(k.ingresos)} en ingresos. Cuatro acciones, en orden de impacto.`;
+  document.getElementById("memo").innerHTML = [
+    [`Cuidar a Campeones y Leales.`, `Son el ${pct(c.share_clientes + l.share_clientes)} de los clientes y generan el ${pct(c.share_ingresos + l.share_ingresos)} de los ingresos. Merecen atención dedicada, acceso anticipado a novedades y cero descuentos innecesarios: ya compran.`],
+    [`Reactivar a los que se están yendo.`, `${num(r.clientes + n.clientes)} clientes que compraban seguido (mediana de ${num(r.frecuencia)} a ${num(n.frecuencia)} compras) llevan más de ${num(n.recencia)} días sin comprar y suman el ${pct(r.share_ingresos + n.share_ingresos)} de los ingresos. Una campaña personalizada a este grupo es la de mejor retorno esperado.`],
+    [`Conseguir la segunda compra.`, `Solo el ${pct(k.retencion_m1)} de una cohorte vuelve el mes siguiente, y la curva se aplana cerca del ${pct(d.cohortes.curva[d.cohortes.curva.length - 1])}. Un seguimiento en los primeros 30 días después de la primera compra ataca el punto donde más clientes se pierden.`],
+    [`No invertir de más en Hibernando.`, `Es el segmento más grande (${pct(h.share_clientes)} de los clientes) pero aporta el ${pct(h.share_ingresos)} de los ingresos: solo canales de bajo costo.`],
+  ].map(([b, t]) => `<li><b>${b}</b> <span>${t}</span></li>`).join("");
+
+  const co = d.cohortes;
+  const drawHeat = () => { Charts.heat("#heat", {
+    rows: co.filas.map((f, i) => `${mes(f)} <span style="color:var(--muted)">(${co.tamanos[i]})</span>`),
+    cols: co.columnas.map((c) => "M" + c),
+    cells: co.valores.map((row) => row.map((v, i) => (i === 0 ? null : v))),
+    fmt: (v) => pct(v), max: 0.4, corner: "Cohorte (clientes)",
+  });
+  document.querySelectorAll("#heat tbody tr").forEach((tr) => { tr.children[1].textContent = "100%"; tr.children[1].style.color = "var(--muted)"; }); };
+  drawHeat();
+
+  const curve = Charts.line("#curve", {
+    labels: co.curva.map((_, i) => "Mes " + i), series: [{ name: "Retención", values: co.curva }],
+    fmt: (v) => pct(v, 1), tickFmt: (v) => pct(v), height: 220, aria: "Curva de retención promedio",
+  });
+  const bars = Charts.bars("#segbars", {
+    items: d.segmentos.map((s) => ({ label: s.segmento, value: s.share_ingresos, note: `${pct(s.share_clientes, 1)} de los clientes`, color: SEG_SLOT[s.segmento] != null ? Charts.seriesColor(SEG_SLOT[s.segmento]) : "var(--muted)" })),
+    fmt: (v) => pct(v, 1), valueName: "Ingresos", labelWidth: 150,
+  });
+  Charts.table("#segtable", ["Segmento", "Clientes", "% clientes", "% ingresos", "Recencia (días)", "Compras", "Gasto mediano"],
+    d.segmentos.map((s) => [s.segmento, num(s.clientes), pct(s.share_clientes, 1), pct(s.share_ingresos, 1), num(s.recencia), num(s.frecuencia), gbp(s.ticket_cliente)]));
+
+  Charts.themeToggle(document.getElementById("theme"), () => { curve.redraw(); bars.redraw(); drawHeat(); },
+    { system: "Auto", light: "Claro", dark: "Oscuro", prefix: "Tema" });
+});
+</script>
+</body>
+</html>
